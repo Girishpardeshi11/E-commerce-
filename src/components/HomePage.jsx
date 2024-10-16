@@ -1,48 +1,72 @@
 import ProductList from "./ProductList";
+import React, { useEffect, useState } from "react";
 import CustomSlider from "./CustomSlider";
 
 const HomePage = () => {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all"); // Default to 'all'
+
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          "https://fakestoreapi.com/products/categories"
+        );
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category); // Set the selected category
+  };
+
   return (
-    <div className="">
-      {/* Navbar */}
-      <div class="bg-gray-500 text-white fixed w-full top-0 shadow-md z-10">
-        <div class="container mx-auto flex justify-between items-center py-4 px-4">
-          <div class="text-2xl font-bold">E-Commerce</div>
-          <div class="hidden md:flex space-x-4">
-            <a href="#" class="hover:text-gray-300 transition duration-300">
+    <div>
+      {/* Navbar with category select */}
+      <div className="bg-gray-600 text-white sticky top-0 w-full  shadow-md z-10">
+        <div className="container mx-auto flex justify-between items-center py-4 px-4">
+          <div className="text-2xl font-bold">E-Commerce</div>
+          <div className="hidden md:flex space-x-16 ">
+            <a href="#" className="hover:text-gray-300 transition duration-300">
               Home
             </a>
-            <a href="#" class="hover:text-gray-300 transition duration-300">
+            <a href="#" className="hover:text-gray-300 transition duration-300">
               Products
             </a>
-            <a href="#" class="hover:text-gray-300 transition duration-300">
+            <a href="#" className="hover:text-gray-300 transition duration-300">
               Cart
             </a>
           </div>
-          <input
-            type="text"
-            placeholder="Search"
-            class="p-2 rounded-md outline-none text-black focus:ring-2 focus:ring-blue-500"
-          />
+
+          {/* Dropdown for categories */}
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="bg-gray-700 text-white p-3 rounded shadow-md transition duration-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          >
+            <option value="all">All Categories</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
-
-      {/* slider */}
-      <CustomSlider className="" />
-
-      {/* Categories */}
-      <div className="container mx-auto py-10">
-        <h2 className="text-3xl font-semibold mb-6">Product Categories</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div className="bg-gray-100 p-6 text-center">Electronics</div>
-          <div className="bg-gray-100 p-6 text-center">Fashion</div>
-          <div className="bg-gray-100 p-6 text-center">Home Appliances</div>
-          <div className="bg-gray-100 p-6 text-center">Sports</div>
-        </div>
+      <div className="mt-5">
+        <CustomSlider className="" />
       </div>
 
-      <h1 className="text-4xl font-bold mb-6 text-center"> Alll Products</h1>
-      <ProductList />
+      {/* Render products based on selected category */}
+      <ProductList selectedCategory={selectedCategory} />
 
       {/* Footer */}
       <footer className="bg-gray-700 text-white py-6">

@@ -31,7 +31,7 @@ const CustomSlider = () => {
 
   // Automatic slide change every 3 seconds
   useEffect(() => {
-    const slideInterval = setInterval(nextSlide, 3000);
+    const slideInterval = setInterval(nextSlide, 5000);
     return () => clearInterval(slideInterval);
   }, [images]);
 
