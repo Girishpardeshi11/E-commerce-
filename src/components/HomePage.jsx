@@ -61,8 +61,8 @@ const HomePage = () => {
           </select>
         </div>
       </div>
-      <div className="mt-5">
-        <CustomSlider className="" />
+      <div className="my-4">
+        <CustomSlider  />
       </div>
 
       {/* Render products based on selected category */}

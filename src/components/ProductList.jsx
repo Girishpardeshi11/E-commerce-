@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ProductList = ({ selectedCategory }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // useNavigate to programmatically navigate
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = selectedCategory === "all"
-          ? await axios.get("https://fakestoreapi.com/products") // Fetch all products
-          : await axios.get(`https://fakestoreapi.com/products/category/${selectedCategory}`); // Fetch category-specific products
-          
+        const response =
+          selectedCategory === "all"
+            ? await axios.get("https://fakestoreapi.com/products")
+            : await axios.get(
+                `https://fakestoreapi.com/products/category/${selectedCategory}`
+              );
         setProducts(response.data);
       } catch (err) {
         setError("Error fetching products");
@@ -23,7 +27,12 @@ const ProductList = ({ selectedCategory }) => {
     };
 
     fetchProducts();
-  }, [selectedCategory]); // Re-fetch when category changes
+  }, [selectedCategory]);
+
+  const handleViewProduct = (product) => {
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+    navigate(`/product-detail`); // Navigate to the ProductDetailPage component
+  };
 
   if (loading) {
     return <div>Loading products...</div>;
@@ -43,18 +52,18 @@ const ProductList = ({ selectedCategory }) => {
           <img
             src={product.image || "/fallback-image.png"}
             alt={product.title}
-            className="w-full h-48 object-cover mb-4"
+            className="w-auto h-48 object-cover mb-4 cursor-pointer"
+            onClick={() => handleViewProduct(product)}
           />
           <h3 className="text-lg font-semibold">{product.title}</h3>
           <p className="text-gray-600 mb-2">${product.price.toFixed(2)}</p>
-          <a
-            href={`/product/${product.id}`}
-            target="_blank"
+
+          <button
+            onClick={() => handleViewProduct(product)}
             className="text-blue-500 underline"
-            rel="noopener noreferrer"
           >
             View Product
-          </a>
+          </button>
         </div>
       ))}
     </div>
