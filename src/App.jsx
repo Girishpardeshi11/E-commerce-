@@ -1,21 +1,27 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import "./App.css";
 import { useState } from "react";
 import LoginPage from "./components/LoginPage";
 import HomePage from "./components/HomePage";
 import ProductList from "./components/ProductList"; // Updated ProductList
 import ProductDetailPage from "./components/ProductDetailPage"; // Import new ProductDetailPage
-import { ToastContainer, toast } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css'; 
-import axios from 'axios';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { CartProvider } from "./components/CartContext";
+import CartPage from "./components/CartPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await axios.post('https://fakestoreapi.com/auth/login', {
+      const response = await axios.post("https://fakestoreapi.com/auth/login", {
         username: "mor_2314",
         password: "83r5^_",
       });
@@ -29,6 +35,7 @@ function App() {
   };
 
   return (
+    <CartProvider>
     <Router>
       <div>
         <Routes>
@@ -45,6 +52,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/product/:productId" element={<ProductList />} />
           <Route path="/product-detail" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
 
         <ToastContainer
@@ -60,6 +68,7 @@ function App() {
         />
       </div>
     </Router>
+    </CartProvider>
   );
 }
 

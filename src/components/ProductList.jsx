@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const ProductList = ({ selectedCategory }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,20 +48,22 @@ const ProductList = ({ selectedCategory }) => {
       {products.map((product) => (
         <div
           key={product.id}
-          className="p-4 border rounded-md shadow-md hover:bg-gray-100 transition duration-300"
+          // className=" p-4 border rounded-lg shadow-md hover:bg-gray-400 transition duration-700"
+          className="border rounded-lg p-4 shadow bg-gray-700 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between  h-auto relative"
         >
           <img
             src={product.image || "/fallback-image.png"}
             alt={product.title}
-            className="w-auto h-48 object-cover mb-4 cursor-pointer"
+            className="mb-4 cursor-pointer object-contain h-[250px] w-full"
+
             onClick={() => handleViewProduct(product)}
           />
           <h3 className="text-lg font-semibold">{product.title}</h3>
-          <p className="text-gray-600 mb-2">${product.price.toFixed(2)}</p>
+          <p className="bg-white-600 mb-2">${product.price.toFixed(2)}</p>
 
           <button
             onClick={() => handleViewProduct(product)}
-            className="text-blue-500 underline"
+            className="text-red-50 underline"
           >
             View Product
           </button>
