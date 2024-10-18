@@ -59,8 +59,7 @@ const ProductList = ({ selectedCategory }) => {
             onClick={() => handleViewProduct(product)}
           />
           <h3 className="text-lg font-semibold">{product.title}</h3>
-          <p className="bg-white-600 mb-2">${product.price.toFixed(2)}</p>
-
+          <p className="bg-white-600 mb-2">₹{product.price.toFixed(2)}</p>
           <button
             onClick={() => handleViewProduct(product)}
             className="text-red-50 underline"

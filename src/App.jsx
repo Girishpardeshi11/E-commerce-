@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { CartProvider } from "./components/CartContext";
 import CartPage from "./components/CartPage";
+import AddedProductPage from "./components/AddedProductPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -53,6 +54,7 @@ function App() {
           <Route path="/product/:productId" element={<ProductList />} />
           <Route path="/product-detail" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/added-product" element={<AddedProductPage />} />
         </Routes>
 
         <ToastContainer
