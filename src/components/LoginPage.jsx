@@ -18,8 +18,8 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-700">
-        {/* Background Image with Blur */}
-        <div
+      {/* Background Image with Blur */}
+      <div
         className="absolute inset-0"
         style={{
           backgroundImage: `url("https://img.freepik.com/premium-vector/online-shopping-digital-technology-with-icon-blue-background-ecommerce-online-store-marketing_252172-219.jpg?semt=ais_hybrid")`,
@@ -30,7 +30,8 @@ const LoginPage = ({ onLogin }) => {
         }}
       />
 
-      <div className="w-[500px] h-[500px] max-w-sm bg-gray-800 p-8 rounded-lg shadow-lg relative">
+      {/* Adjusted Width, Height, and Flex Properties */}
+      <div className="w-[500px] max-w-sm h-[600px] bg-gray-800 p-8 rounded-lg shadow-lg relative flex flex-col justify-center items-center">
         {/* User Icon */}
         <div className="flex justify-center -mt-16 mb-4">
           <div className="bg-gray-900 p-6 rounded-full">

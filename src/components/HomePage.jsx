@@ -4,6 +4,7 @@ import CustomSlider from "./CustomSlider";
 import { BsCart4 } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import Navbar from "./Navbar";
+import axios from "axios"; // Import axios
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -14,11 +15,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(
-          "https://fakestoreapi.com/products/categories"
-        );
-        const data = await response.json();
-        setCategories(data);
+        const response = await axios.get("https://fakestoreapi.com/products/categories");
+        setCategories(response.data); // Use axios response data
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -38,8 +36,8 @@ const HomePage = () => {
 
   return (
     <div className="bg-gray-600 text-gray-200 min-h-screen">
-       {/* Render Navbar */}
-       <Navbar
+      {/* Render Navbar */}
+      <Navbar
         categories={categories}
         selectedCategory={selectedCategory}
         handleCategoryChange={handleCategoryChange}

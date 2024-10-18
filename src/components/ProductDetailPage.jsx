@@ -44,17 +44,16 @@ const ProductDetailPage = () => {
 
     localStorage.setItem("cart", JSON.stringify(currentCart));
 
-    // Simulate API call
     axios
       .post("https://fakestoreapi.com/carts", {
         userId: 5,
         date: new Date().toISOString().split("T")[0],
         products: [{ productId: product.id, quantity: 1 }],
       })
-      .then((response) => {
+      .then(() => {
         toast.success("Product added to cart successfully!");
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("Failed to add product to cart.");
       })
       .finally(() => {
@@ -94,7 +93,6 @@ const ProductDetailPage = () => {
     e.preventDefault();
     const { name, address, email, phone } = customerData;
     if (name && address && email && phone) {
-      console.log("Customer Data:", customerData);
       toast.success("Purchase successful!");
       setShowModal(false);
     } else {
@@ -104,7 +102,7 @@ const ProductDetailPage = () => {
 
   if (!product) {
     return (
-      <div className="text-center text-gray-400">
+      <div className="text-center text-gray-400 flex items-center justify-center min-h-screen">
         Loading product details...
       </div>
     );
@@ -125,18 +123,19 @@ const ProductDetailPage = () => {
       />
 
       {/* Back Button */}
-      <div className="flex justify-start w-full max-w-xs mb-4 -mt-12 relative ml-0">
+      <div className="flex justify-start w-full max-w-xs mb-4">
         <button
           onClick={handleBack}
-          className="bg-gray-600 text-white px-4 rounded-lg shadow-md hover:bg-gray-500 transition duration-300 h-5 w-9"
+          className="bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-500 transition duration-300 flex items-center"
         >
-          <IoReturnUpBack className="h-5 w-4" />
+          <IoReturnUpBack className="h-5 w-5 mr-1" />
+          Back
         </button>
       </div>
 
       {/* Centered Product Details */}
-      <div className="bg-gray-200 rounded-lg shadow-lg w-full max-w-4xl p-5 bg-opacity-80 z-10 flex flex-row min-h-[300px]">
-        <div className="flex-shrink-0 w-1/2 flex justify-center">
+      <div className="bg-gray-200 rounded-lg shadow-lg w-full max-w-4xl p-5 bg-opacity-80 flex flex-col md:flex-row min-h-[300px]">
+        <div className="flex-shrink-0 w-full md:w-1/2 flex justify-center">
           <img
             src={product.image}
             alt={product.title}
@@ -154,25 +153,26 @@ const ProductDetailPage = () => {
           {/* Buttons */}
           <div className="flex flex-col space-y-2 mt-4">
             <button
-              className="bg-gray-600 text-white py-2 rounded-lg shadow-md hover:bg-gray-500 transition duration-300 w-36"
+              className="bg-gray-600 text-white py-2 rounded-lg shadow-md hover:bg-gray-500 transition duration-300 w-full"
               onClick={handleViewDetails}
             >
-              View Details
+              {showDescription ? "Hide Details" : "View Details"}
             </button>
             <button
-              className="bg-green-600 text-white py-2 rounded-lg shadow-md hover:bg-green-500 transition duration-300 w-36"
+              className="bg-green-600 text-white py-2 rounded-lg shadow-md hover:bg-green-500 transition duration-300 w-full"
               onClick={handleAddToCart}
+              disabled={isLoading}
             >
-              Add to Cart
+              {isLoading ? "Adding to Cart..." : "Add to Cart"}
             </button>
             <button
-              className="bg-blue-600 text-white py-2 px-4 rounded w-36"
+              className="bg-blue-600 text-white py-2 px-4 rounded w-full"
               onClick={handleCartClick}
             >
               Go to Cart
             </button>
             <button
-              className="bg-red-600 text-white py-2 px-4 rounded w-36"
+              className="bg-red-600 text-white py-2 px-4 rounded w-full"
               onClick={handleBuyNow}
             >
               Buy Now

@@ -8,8 +8,8 @@ import "./App.css";
 import { useState } from "react";
 import LoginPage from "./components/LoginPage";
 import HomePage from "./components/HomePage";
-import ProductList from "./components/ProductList"; // Updated ProductList
-import ProductDetailPage from "./components/ProductDetailPage"; // Import new ProductDetailPage
+import ProductList from "./components/ProductList"; 
+import ProductDetailPage from "./components/ProductDetailPage"; 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";

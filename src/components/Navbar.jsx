@@ -3,7 +3,6 @@ import { BsCart4 } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-
 const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavigate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productAdded, setProductAdded] = useState(null); // Track added product
@@ -36,7 +35,7 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
       const response = await axios.post("https://fakestoreapi.com/products", formData);
       console.log("Product Added:", response.data);
       toggleModal(); // Close the modal after submission
-  
+
       // Navigate to the new page with product details
       navigate('/added-product', { state: { product: response.data } });
     } catch (error) {
@@ -44,8 +43,8 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
     }
   };
 
-  const handleViewProducts = (product) => {
-    navigate('/added-product', { state: { product } }); 
+  const handleViewProducts = () => {
+    navigate('/added-product', { state: { product: productAdded } }); 
   };
 
   return (
@@ -60,12 +59,12 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
           <span className="ml-3 text-2xl font-bold text-white">E-Commerce</span>
         </div>
 
-        <div className="flex space-x-8">
+        <div className="flex space-x-4">
           {/* Dropdown for categories */}
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
-            className="bg-gray-700 text-white p-3 rounded shadow-md transition duration-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            className="bg-gray-700 text-white p-3 rounded-md shadow-md transition duration-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             <option value="all">All Categories</option>
             {categories.map((category, index) => (
@@ -76,20 +75,20 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
           </select>
 
           {/* Cart Icon */}
-          <BsCart4 className="h-10 w-full cursor-pointer" onClick={handleNavigate} />
+          <BsCart4 className="h-10 w-10 text-white cursor-pointer transition duration-300 hover:text-blue-500" onClick={handleNavigate} />
 
           {/* Add Product Button */}
           <button
             onClick={toggleModal}
-            className="bg-green-500 text-white p-2 rounded shadow-md hover:bg-green-400 transition duration-300"
+            className="bg-green-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-400 transition duration-300 text-lg font-semibold"
           >
             Add Product
           </button>
 
           {/* View Products Button */}
           <button
-            onClick={() => handleViewProducts}
-            className="bg-blue-500 text-white p-2 rounded shadow-md hover:bg-blue-400 transition duration-300"
+            onClick={handleViewProducts}
+            className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-400 transition duration-300 text-lg font-semibold"
           >
             View Products
           </button>
@@ -99,8 +98,8 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
       {/* Modal for Adding Product */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
-            <h2 className="text-2xl font-bold mb-4">Add New Product</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+            <h2 className="text-2xl text-black font-bold mb-4">Add New Product</h2>
             <form onSubmit={handleAddProduct}>
               <div className="mb-4">
                 <label className="block text-gray-700">Title</label>
@@ -109,7 +108,7 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                   required
                 />
               </div>
@@ -120,7 +119,7 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
                   name="price"
                   value={formData.price}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                   required
                 />
               </div>
@@ -130,7 +129,7 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                   required
                 />
               </div>
@@ -141,7 +140,7 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                   required
                 />
               </div>
@@ -152,7 +151,7 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
                   name="image"
                   value={formData.image}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                   required
                 />
               </div>
@@ -160,13 +159,13 @@ const Navbar = ({ categories, selectedCategory, handleCategoryChange, handleNavi
                 <button
                   type="button"
                   onClick={toggleModal}
-                  className="bg-gray-500 text-white p-2 rounded mr-2"
+                  className="bg-gray-500 text-white p-2 rounded-md mr-2 hover:bg-gray-400"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white p-2 rounded"
+                  className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-400"
                 >
                   Add Product
                 </button>
